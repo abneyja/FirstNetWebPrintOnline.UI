@@ -1,0 +1,36 @@
+.alert-danger {
+    background-color: red;
+    padding: 1%;
+    width: 85%;
+}
+
+.alert {
+    color: black;    
+    align-content: center;
+    margin: 1px;
+}
+
+
+/* #ordernumber {
+    border-width: 2px;
+    border-color: black;
+    border-style: dashed;
+}
+
+.col {
+    border-width: 2px;
+    border-color: black;
+    border-style: dashed;
+}
+
+.form-check {
+    border-width: 2px;
+    border-color: black;
+    border-style: dashed;
+} 
+
+.row {
+    border-width: 2px;
+    border-color: black;
+    border-style: dashed;
+}  */

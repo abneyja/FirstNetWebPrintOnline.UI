@@ -1,0 +1,65 @@
+<div class="form-row">
+    <form class="row g-6" #form="ngForm" (ngSubmit)="addPrintRequest()">
+        <div class="form-group col-md-6">
+            <label for="" class="form-label">Order Number</label>
+            <input #ordernumber="ngModel" minlength="6" maxlength="6" type="text" class="form-control" id="ordernumber" [pattern]="'^[0-9]+$'"
+            name="ordernumber" [(ngModel)] = "addPrintRequestRequest.ordernumber" required placeholder="Enter last 6-digits of order number">
+            <div *ngIf="ordernumber.touched && ordernumber.invalid" class="alert alert-danger">
+                <div *ngIf="ordernumber.errors?.['required']">
+                    Order number is required
+                </div>
+                <div *ngIf="ordernumber.errors?.['minlength'] || ordernumber.errors?.['maxlength'] || ordernumber.errors?.['pattern']">
+                    Order number must consist of only 6 digits
+                </div>                                        
+            </div>
+        </div>
+        <div class="form-check col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [value]="true" id="automode" checked name="automode" style="transform: scale(0.8)"
+                    [(ngModel)] = "addPrintRequestRequest.automode" #AutoMode (change)="printOptions()">
+                    <label class="form-check-label" for="" style="transform: scale(0.9);">Auto Mode (Print All)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [value]="true" [disabled]="AutoMode.checked" id="printsonar" checked name="printsonar" style="transform: scale(0.8)"
+                    [(ngModel)] = "addPrintRequestRequest.printsonar" #PrintSonar ng-model="printsonar">
+                    <label class="form-check-label" for="" style="transform: scale(0.9);">Sonar Label(s)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [value]="true" [disabled]="AutoMode.checked" id="printphone" checked name="printphone" style="transform: scale(0.8)"
+                    [(ngModel)] = "addPrintRequestRequest.printphone" ng-model="printphone" #PrintPhone>
+                    <label class="form-check-label" for="" style="transform: scale(0.9)">Phone Label(s)</label>
+                </div>
+            
+            
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [value]="true" [disabled]="AutoMode.checked" id="printorder" checked name="printorder" style="transform: scale(0.8)"
+                    [(ngModel)] = "addPrintRequestRequest.printorder"ng-model="printorder" #PrintOrder>
+                    <label class="form-check-label" for="" style="transform: scale(0.9)">Work Order Sheet</label>
+                </div> 
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" [value]="true" [disabled]="AutoMode.checked" [indeterminate]="AutoMode.checked" id="printbarcodes" name="printbarcodes" style="transform: scale(0.8)"
+                        [(ngModel)] = "addPrintRequestRequest.printbarcodes" ng-model="printbarcodes" #PrintBarcodes (change)="coamOption()">
+                        <label class="form-check-label" for="" style="transform: scale(0.9)">Barcode Sheet</label>
+                    </div> 
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" [value]="false" [disabled]="!PrintBarcodes.checked" id="printcoam" name="printcoam" style="transform: scale(0.8)"
+                        [(ngModel)] = "addPrintRequestRequest.printcoam" ng-model="printcoam" #PrintCoam>
+                        <label class="form-check-label" for="" style="transform: scale(0.9)">COAM</label>
+                    </div>
+        </div>
+
+        <div class="row" style="height: 50px">
+            <div class="col">
+                <button type="submit" class="btn btn-primary" [disabled]="form.invalid || 
+                (!PrintSonar.checked && !PrintPhone.checked && !PrintOrder.checked && !PrintBarcodes.checked)">Submit</button>
+            </div>
+            <div class="col">
+                <div *ngIf="!PrintSonar.checked && !PrintPhone.checked && !PrintOrder.checked && !PrintBarcodes.checked" class="alert alert-danger">
+                    <div>
+                        At least one option is required
+                    </div>                 
+                </div>
+            </div>
+        </div>
+    </form>  
+</div>  

@@ -1,0 +1,30 @@
+<div class="dropdown"
+*ngIf="auth.user$ | async as user"
+>
+  <a
+  class="dropdown-toggle rounded-circle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" 
+  >
+    <!-- Profile image should be set to the profile picture from the id token -->
+    <img
+      [src]="user.picture"
+      alt="Profile picture"
+      class="nav-user-profile rounded-circle"
+      style="width: 45px;"
+    />
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <li><span class="dropdown-item-text">{{ user.name }}</span></li>
+    <li>              
+      <!-- <a routerLink="/profile" class="dropdown-item dropdown-profile">
+        <fa-icon [icon]="faUser" class="mr-3"></fa-icon> Profile
+      </a> -->
+      <button
+        (click)="logout()"
+        class="btn btn-link dropdown-item"
+        id="qsLogoutBtn"
+      >
+        <fa-icon [icon]="faPowerOff" class="mr-3"></fa-icon> Log out
+      </button>
+    </li>
+  </ul>
+</div>
