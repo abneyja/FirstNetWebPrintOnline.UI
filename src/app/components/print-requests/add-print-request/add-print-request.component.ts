@@ -7,15 +7,14 @@ import { AuthService, User } from '@auth0/auth0-angular';
 @Component({
   selector: 'app-add-print-request',
   templateUrl: './add-print-request.component.html',
-  styleUrls: ['./add-print-request.component.css']
+  styleUrls: ['./add-print-request.component.css'],
 })
 export class AddPrintRequestComponent implements OnInit {
-
   addPrintRequestRequest: PrintRequest = {
     id: '',
     ordernumber: '',
     username: '',
-    email:'',
+    email: '',
     timestamp: '',
     timestale: -1,
     printsonar: true,
@@ -24,51 +23,49 @@ export class AddPrintRequestComponent implements OnInit {
     printbarcodes: true,
     printcoam: false,
     automode: true,
-    status: 'queued'
-  }
+    status: 'queued',
+  };
 
   printRequests: PrintRequest[] = [];
 
-  constructor(public auth: AuthService,private printRequestsService: PrintRequestsService, private router: Router) { }
+  constructor(
+    public auth: AuthService,
+    private printRequestsService: PrintRequestsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    if(this.auth.user$)
-      this.auth.user$.subscribe(userProfile => {
-        this.addPrintRequestRequest.username = userProfile?.name ?? "";
-        this.addPrintRequestRequest.email = userProfile?.email ?? "";          
-    });
-
-/*     if(this.auth.user$)
-      this.auth.user$.subscribe(userProfile => {
-        this.addPrintRequestRequest.email = userProfile?.email ?? "";          
-    }); */
+    if (this.auth.user$)
+      this.auth.user$.subscribe((userProfile) => {
+        this.addPrintRequestRequest.username = userProfile?.name ?? '';
+        this.addPrintRequestRequest.email = userProfile?.email ?? '';
+      });
   }
 
   addPrintRequest() {
-    this.printRequestsService.addPrintRequest(this.addPrintRequestRequest)
-    .subscribe({
-      next: (printrequest) => {
-        this.refreshList();
-      }
-    }) 
+    this.printRequestsService
+      .addPrintRequest(this.addPrintRequestRequest)
+      .subscribe({
+        next: (printrequest) => {
+          this.refreshList();
+        },
+      });
     console.log(this.addPrintRequestRequest);
   }
 
-  printOptions(){
-    if(this.addPrintRequestRequest.automode)
-    {
+  printOptions() {
+    if (this.addPrintRequestRequest.automode) {
       this.addPrintRequestRequest.printsonar = true;
       this.addPrintRequestRequest.printphone = true;
       this.addPrintRequestRequest.printorder = true;
       this.addPrintRequestRequest.printbarcodes = true;
-    }else
-      this.addPrintRequestRequest.printbarcodes = false;
+    } else this.addPrintRequestRequest.printbarcodes = false;
 
     this.coamOption();
   }
 
-  coamOption(){
-    if(!this.addPrintRequestRequest.printbarcodes)
+  coamOption() {
+    if (!this.addPrintRequestRequest.printbarcodes)
       this.addPrintRequestRequest.printcoam = false;
   }
 
